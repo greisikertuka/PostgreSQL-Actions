@@ -73,7 +73,7 @@ public class Test {
         connectivity = new Connectivity();
         connection = connectivity.getConnection();
 
-        /*System.out.println("Ruaj nje te dhene!");
+        System.out.println("Ruaj nje te dhene!");
         System.out.println("Jep numrin e porosise, emrin dhe mbiemrin:");
 
         java.util.Date javaDate = new java.util.Date();
@@ -87,7 +87,7 @@ public class Test {
         System.out.println("Kerko nje rekord!");
         System.out.println("Jep nje Order Number!");
         findByOrderNumber(scn.nextLine());
-*/
+
         System.out.println("Fshij nje rekord!");
         System.out.println("Jep nje Order Number!");
         deleteRecord(scn.nextLine());
