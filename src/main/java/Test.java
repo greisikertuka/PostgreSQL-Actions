@@ -39,7 +39,7 @@ public class Test {
     }
 
     public static void findByOrderNumber(String orderNumber) throws SQLException {
-        String sql = "SELECT * FROM orders where order_no = '" + orderNumber +"'";
+        String sql = "SELECT * FROM orders where order_no = '" + orderNumber + "'";
 
 
         Statement statement = connection.createStatement();
@@ -55,12 +55,25 @@ public class Test {
         }
     }
 
+    public static void deleteRecord(String orderNumber) throws SQLException {
+        String sql = "DELETE FROM orders" +
+                " where order_no = '" + orderNumber + "';";
+
+
+        Statement statement = connection.createStatement();
+        try {
+            statement.executeQuery(sql);
+        } catch (org.postgresql.util.PSQLException e) {
+            System.out.println("Rekordi u fshi me sukses!");
+        }
+    }
+
     public static void main(String[] args) throws SQLException {
         Scanner scn = new Scanner(System.in);
         connectivity = new Connectivity();
         connection = connectivity.getConnection();
 
-        System.out.println("Ruaj nje te dhene!");
+        /*System.out.println("Ruaj nje te dhene!");
         System.out.println("Jep numrin e porosise, emrin dhe mbiemrin:");
 
         java.util.Date javaDate = new java.util.Date();
@@ -74,6 +87,10 @@ public class Test {
         System.out.println("Kerko nje rekord!");
         System.out.println("Jep nje Order Number!");
         findByOrderNumber(scn.nextLine());
+*/
+        System.out.println("Fshij nje rekord!");
+        System.out.println("Jep nje Order Number!");
+        deleteRecord(scn.nextLine());
 
     }
 }
