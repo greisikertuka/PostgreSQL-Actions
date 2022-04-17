@@ -72,25 +72,48 @@ public class Test {
         Scanner scn = new Scanner(System.in);
         connectivity = new Connectivity();
         connection = connectivity.getConnection();
-
-        System.out.println("Ruaj nje te dhene!");
-        System.out.println("Jep numrin e porosise, emrin dhe mbiemrin:");
+        int n;
 
         java.util.Date javaDate = new java.util.Date();
         java.sql.Date sqlDate = new java.sql.Date(javaDate.getTime());
 
-        insert(scn.nextLine(), scn.nextLine(), scn.nextLine(), sqlDate);
-
-        System.out.println("Shfaq te dhenat!");
-        showAllRecords();
-
-        System.out.println("Kerko nje rekord!");
-        System.out.println("Jep nje Order Number!");
-        findByOrderNumber(scn.nextLine());
-
-        System.out.println("Fshij nje rekord!");
-        System.out.println("Jep nje Order Number!");
-        deleteRecord(scn.nextLine());
-
+        while (true) {
+            boolean exit = false;
+            System.out.println("""
+                    Shtypni:
+                    1 per te shfaqur gjithe te dhenat,
+                    2 per te shtuar nje rekord,
+                    3 per te kerkuar nje rekord,
+                    4 per te fshire nje rekord
+                    5 per te dale nga programi!""");
+            n = scn.nextInt();
+            switch (n) {
+                case 1 -> {
+                    System.out.println("Shfaq te dhenat!");
+                    showAllRecords();
+                }
+                case 2 -> {
+                    System.out.println("Ruaj nje te dhene!");
+                    System.out.println("Jep numrin e porosise, emrin dhe mbiemrin:");
+                    insert(scn.nextLine(), scn.nextLine(), scn.nextLine(), sqlDate);
+                }
+                case 3 -> {
+                    System.out.println("Kerko nje rekord!");
+                    System.out.println("Jep nje Order Number!");
+                    findByOrderNumber(scn.nextLine());
+                }
+                case 4 -> {
+                    System.out.println("Fshij nje rekord!");
+                    System.out.println("Jep nje Order Number!");
+                    deleteRecord(scn.nextLine());
+                }
+                case 5 -> exit = true;
+                default -> System.out.println("Ju shtypet nje numer gabim!");
+            }
+            if (exit) {
+                System.out.println("Ju dolet nga programi!");
+                break;
+            }
+        }
     }
 }
