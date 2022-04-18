@@ -22,7 +22,7 @@ public class Test {
     }
 
     public static void showAllRecords() throws SQLException {
-        String sql = "SELECT * FROM orders";
+        String sql = "SELECT order_no,firstname, lastname, date  FROM orders";
 
 
         Statement statement = connection.createStatement();
@@ -39,7 +39,7 @@ public class Test {
     }
 
     public static void findByOrderNumber(String orderNumber) throws SQLException {
-        String sql = "SELECT * FROM orders where order_no = '" + orderNumber + "'";
+        String sql = "SELECT order_no,firstname, lastname, date FROM orders where order_no = '" + orderNumber + "'";
 
 
         Statement statement = connection.createStatement();
@@ -93,16 +93,19 @@ public class Test {
                     showAllRecords();
                 }
                 case 2 -> {
+                    scn.nextLine();
                     System.out.println("Ruaj nje te dhene!");
                     System.out.println("Jep numrin e porosise, emrin dhe mbiemrin:");
                     insert(scn.nextLine(), scn.nextLine(), scn.nextLine(), sqlDate);
                 }
                 case 3 -> {
+                    scn.nextLine();
                     System.out.println("Kerko nje rekord!");
                     System.out.println("Jep nje Order Number!");
                     findByOrderNumber(scn.nextLine());
                 }
                 case 4 -> {
+                    scn.nextLine();
                     System.out.println("Fshij nje rekord!");
                     System.out.println("Jep nje Order Number!");
                     deleteRecord(scn.nextLine());
