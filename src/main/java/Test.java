@@ -2,75 +2,11 @@ import java.sql.*;
 import java.util.Scanner;
 
 public class Test {
-    private static Connectivity connectivity;
     private static Connection connection;
-
-    public static void insert(String no, String fName, String lName, java.sql.Date Dt) throws SQLException {
-        String sql = "INSERT INTO orders (order_no, firstname, lastname, date) VALUES (?, ?, ?, ?)";
-
-        PreparedStatement preparedStatement = connection.prepareStatement(sql);
-        preparedStatement.setString(1, no);
-        preparedStatement.setString(2, fName);
-        preparedStatement.setString(3, lName);
-        preparedStatement.setDate(4, Dt);
-
-        int row = preparedStatement.executeUpdate();
-
-        if (row > 0) {
-            System.out.println("Rekordi u ruajt me sukses!");
-        }
-    }
-
-    public static void showAllRecords() throws SQLException {
-        String sql = "SELECT order_no,firstname, lastname, date  FROM orders";
-
-
-        Statement statement = connection.createStatement();
-        ResultSet result = statement.executeQuery(sql);
-
-        while (result.next()) {
-            int orderNo = result.getInt("order_no");
-            String firstname = result.getString("firstname");
-            String lastname = result.getString("lastname");
-            java.sql.Date sqlDate = result.getDate("date");
-
-            System.out.println(orderNo + ", " + firstname + ", " + lastname + ", " + sqlDate);
-        }
-    }
-
-    public static void findByOrderNumber(String orderNumber) throws SQLException {
-        String sql = "SELECT order_no,firstname, lastname, date FROM orders where order_no = '" + orderNumber + "'";
-
-
-        Statement statement = connection.createStatement();
-        ResultSet result = statement.executeQuery(sql);
-
-        while (result.next()) {
-            int orderNo = result.getInt("order_no");
-            String firstname = result.getString("firstname");
-            String lastname = result.getString("lastname");
-            java.sql.Date sqlDate = result.getDate("date");
-
-            System.out.println(orderNo + ", " + firstname + ", " + lastname + ", " + sqlDate);
-        }
-    }
-
-    public static void deleteRecord(String orderNumber) throws SQLException {
-        String sql = "DELETE FROM orders" +
-                " where order_no = '" + orderNumber + "';";
-
-
-        Statement statement = connection.createStatement();
-        try {
-            statement.executeQuery(sql);
-        } catch (org.postgresql.util.PSQLException e) {
-            System.out.println("Rekordi u fshi me sukses!");
-        }
-    }
 
     public static void main(String[] args) throws SQLException {
         Scanner scn = new Scanner(System.in);
-        connectivity = new Connectivity();
+        Connectivity connectivity = new Connectivity();
         connection = connectivity.getConnection();
         int n;
 
@@ -115,8 +51,70 @@ public class Test {
             }
             if (exit) {
                 System.out.println("Ju dolet nga programi!");
+                connection.close();
                 break;
             }
+        }
+    }
+
+    public static void insert(String no, String fName, String lName, java.sql.Date Dt) throws SQLException {
+        String sql = "INSERT INTO orders (order_no, firstname, lastname, date) VALUES (?, ?, ?, ?)";
+
+        PreparedStatement preparedStatement = connection.prepareStatement(sql);
+        preparedStatement.setString(1, no);
+        preparedStatement.setString(2, fName);
+        preparedStatement.setString(3, lName);
+        preparedStatement.setDate(4, Dt);
+
+        int row = preparedStatement.executeUpdate();
+
+        if (row > 0) {
+            System.out.println("Rekordi u ruajt me sukses!");
+        }
+    }
+
+    public static void showAllRecords() throws SQLException {
+        String sql = "SELECT order_no, firstname, lastname, date  FROM orders";
+
+        PreparedStatement preparedStatement = connection.prepareStatement(sql);
+        ResultSet result = preparedStatement.executeQuery();
+
+        while (result.next()) {
+            int orderNo = result.getInt("order_no");
+            String firstname = result.getString("firstname");
+            String lastname = result.getString("lastname");
+            java.sql.Date sqlDate = result.getDate("date");
+
+            System.out.println(orderNo + ", " + firstname + ", " + lastname + ", " + sqlDate);
+        }
+    }
+
+    public static void findByOrderNumber(String orderNumber) throws SQLException {
+        String sql = "SELECT order_no,firstname, lastname, date FROM orders where order_no = '" + orderNumber + "'";
+
+        PreparedStatement preparedStatement = connection.prepareStatement(sql);
+        ResultSet result = preparedStatement.executeQuery();
+
+        while (result.next()) {
+            int orderNo = result.getInt("order_no");
+            String firstname = result.getString("firstname");
+            String lastname = result.getString("lastname");
+            java.sql.Date sqlDate = result.getDate("date");
+
+            System.out.println(orderNo + ", " + firstname + ", " + lastname + ", " + sqlDate);
+        }
+    }
+
+    public static void deleteRecord(String orderNumber) throws SQLException {
+        String sql = "DELETE FROM orders" +
+                " where order_no = '" + orderNumber + "'";
+
+        PreparedStatement preparedStatement = connection.prepareStatement(sql);
+        preparedStatement.executeUpdate();
+        try {
+            preparedStatement.executeQuery(sql);
+        } catch (org.postgresql.util.PSQLException e) {
+            System.out.println("Rekordi u fshi me sukses!");
         }
     }
 }
