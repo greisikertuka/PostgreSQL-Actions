@@ -1,3 +1,5 @@
+package jdbc.actions;
+
 import java.sql.*;
 import java.util.Scanner;
 
